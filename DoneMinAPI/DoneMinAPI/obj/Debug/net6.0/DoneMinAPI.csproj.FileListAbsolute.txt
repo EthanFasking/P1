@@ -31,3 +31,13 @@ C:\Users\User\code\EthanP1\EthanP1\DoneMinAPI\DoneMinAPI\obj\Debug\net6.0\refint
 C:\Users\User\code\EthanP1\EthanP1\DoneMinAPI\DoneMinAPI\obj\Debug\net6.0\DoneMinAPI.pdb
 C:\Users\User\code\EthanP1\EthanP1\DoneMinAPI\DoneMinAPI\obj\Debug\net6.0\DoneMinAPI.genruntimeconfig.cache
 C:\Users\User\code\EthanP1\EthanP1\DoneMinAPI\DoneMinAPI\obj\Debug\net6.0\ref\DoneMinAPI.dll
+C:\Users\User\code\P1\DoneMinAPI\DoneMinAPI\obj\Debug\net6.0\DoneMinAPI.csproj.AssemblyReference.cache
+C:\Users\User\code\P1\DoneMinAPI\DoneMinAPI\obj\Debug\net6.0\DoneMinAPI.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\User\code\P1\DoneMinAPI\DoneMinAPI\obj\Debug\net6.0\DoneMinAPI.AssemblyInfoInputs.cache
+C:\Users\User\code\P1\DoneMinAPI\DoneMinAPI\obj\Debug\net6.0\DoneMinAPI.AssemblyInfo.cs
+C:\Users\User\code\P1\DoneMinAPI\DoneMinAPI\obj\Debug\net6.0\DoneMinAPI.csproj.CoreCompileInputs.cache
+C:\Users\User\code\P1\DoneMinAPI\DoneMinAPI\obj\Debug\net6.0\DoneMinAPI.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\User\code\P1\DoneMinAPI\DoneMinAPI\obj\Debug\net6.0\DoneMinAPI.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\User\code\P1\DoneMinAPI\DoneMinAPI\obj\Debug\net6.0\DoneMinAPI.dll
+C:\Users\User\code\P1\DoneMinAPI\DoneMinAPI\obj\Debug\net6.0\refint\DoneMinAPI.dll
+C:\Users\User\code\P1\DoneMinAPI\DoneMinAPI\obj\Debug\net6.0\DoneMinAPI.pdb

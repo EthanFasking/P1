@@ -222,33 +222,39 @@ public class Client
                 }
                 while (pro.Equals("2"))
                 {
-                    string desc = "";
-                    double amt = 0.00;
+                    string desc;
+                    double amt;
                     string s = "";
                     Console.WriteLine("Enter a description:");
-                    desc = desc + Console.ReadLine();
+                    desc = Console.ReadLine();
                     Console.WriteLine("Enter an amount in USD (two decimals)");
-                    amt = amt + Double.Parse("" + Console.ReadLine());
+                    amt = Double.Parse("" + Console.ReadLine());
 
-                    repo.CreateTicket(currentUser, desc, amt);
-                    Console.WriteLine("Ticket created successfully: | " + desc + " | $" + amt.ToString() + " | PENDING |");
-                    Console.WriteLine("0-create new ticket");
-                    Console.WriteLine("1-view previous tickets");
-                    Console.WriteLine("2-logout");
-                    s = s + Console.ReadLine();
-                    if (s.Equals("0"))
+                    if (desc is null || amt is null)
                     {
-                        pro = "2";
-                    }
-                    else if (s.Equals("1"))
-                    {
-                        pro = "1";
+                        throw new Exception(InvalidDataException);
                     } 
-                    else
-                    {
-                        LoggedIn = false;
+                    else 
+                    { 
+                        repo.CreateTicket(currentUser, desc, amt);
+                        Console.WriteLine("Ticket created successfully: | " + desc + " | $" + amt.ToString() + " | PENDING |");
+                        Console.WriteLine("0-create new ticket");
+                        Console.WriteLine("1-view previous tickets");
+                        Console.WriteLine("2-logout");
+                        s = s + Console.ReadLine();
+                        if (s.Equals("0"))
+                        {
+                            pro = "2";
+                        }
+                        else if (s.Equals("1"))
+                        {
+                            pro = "1";
+                        } 
+                        else
+                        {
+                            LoggedIn = false;
+                        }
                     }
-
                 }
             }
         }

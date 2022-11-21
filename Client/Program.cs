@@ -106,9 +106,7 @@ using DoneMinAPI;
             }
             return currentUser;
         }
-        
-        //Manager methods
-        }
+    }
 
 public class Ticket
 {

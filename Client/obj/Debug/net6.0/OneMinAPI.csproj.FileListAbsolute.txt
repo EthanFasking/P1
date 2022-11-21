@@ -39,3 +39,13 @@ C:\Users\User\code\EthanP1\EthanP1\OneMinAPI\bin\Debug\net6.0\System.Net.Http.We
 C:\Users\User\code\EthanP1\EthanP1\OneMinAPI\bin\Debug\net6.0\System.Net.Http.Extensions.dll
 C:\Users\User\code\EthanP1\EthanP1\OneMinAPI\bin\Debug\net6.0\System.Net.Http.Formatting.dll
 C:\Users\User\code\EthanP1\EthanP1\OneMinAPI\bin\Debug\net6.0\System.Net.Http.Primitives.dll
+C:\Users\User\code\P1\OneMinAPI\obj\Debug\net6.0\OneMinAPI.csproj.AssemblyReference.cache
+C:\Users\User\code\P1\OneMinAPI\obj\Debug\net6.0\OneMinAPI.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\User\code\P1\OneMinAPI\obj\Debug\net6.0\OneMinAPI.AssemblyInfoInputs.cache
+C:\Users\User\code\P1\OneMinAPI\obj\Debug\net6.0\OneMinAPI.AssemblyInfo.cs
+C:\Users\User\code\P1\OneMinAPI\obj\Debug\net6.0\OneMinAPI.csproj.CoreCompileInputs.cache
+C:\Users\User\code\P1\OneMinAPI\obj\Debug\net6.0\OneMinAPI.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\User\code\P1\OneMinAPI\obj\Debug\net6.0\OneMinAPI.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\User\code\P1\OneMinAPI\obj\Debug\net6.0\OneMinAPI.dll
+C:\Users\User\code\P1\OneMinAPI\obj\Debug\net6.0\refint\OneMinAPI.dll
+C:\Users\User\code\P1\OneMinAPI\obj\Debug\net6.0\OneMinAPI.pdb

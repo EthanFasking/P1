@@ -90,6 +90,44 @@ app.MapGet("/{user.GetUsername()}/tickets/pending", () => {
     return repo.GetPendingTickets();
 });
 
+//Checklist====================================================================================
+//1. UN/PW Login
+app.MapGet("/User/{email}", (string email, string password) => {
+    repo.UserLogin(email, password);
+    return Results.Created(email, password);
+    });
+
+//2. Register
+app.MapPost("/User", (string email,string password) =>
+{
+    User u = repo.Register(email, password);
+    return Results.Created($"/User/{u.GetUsername()}", u);
+});
+
+//3. UN unavailable
+app.MapPost("/User", (string email,string password) =>
+{
+    User u = repo.Register(email, password);
+    throw BadHttpRequestException;
+});
+
+//4. Submit new Ticket
+app.MapPost("/{user.GetUsername()}/tickets", (User u, string description, double amt) =>
+{
+    Ticket t = repo.CreateTicket(u,description,amt);
+    return Results.Created($"/{u.GetUsername()}/tickets/{t.GetId()}", t);
+});
+
+//5. Ensure Ticket has description and amount
+
+
+//6. Managers can see pending, Employees can't
+
+
+//7. Process Tickets
+
+
+//8. Employees can see Previous submissions, filtered
 
 
 app.Run();
