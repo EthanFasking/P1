@@ -5,6 +5,8 @@ using System.Data.Sql;
 using System.Reflection.PortableExecutable;
 using System.Runtime.InteropServices;
 
+namespace P1 { 
+
 var builder = WebApplication.CreateBuilder(args);
 
 string ConnectionString = File.ReadAllText(@"C:\Users\User\code\EthanP1\EthanP1\ConnectionString\SQLDataBaseP1.txt");
@@ -749,4 +751,5 @@ public class SqlRepository : IRepository
         }
         return ct;
     }
+}
 }

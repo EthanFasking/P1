@@ -1,8 +1,8 @@
 {
   "Version": 1,
-  "Hash": "2fj5pG0fciIj01xS9H39KBU6Dj8lMdKeQ9PG7RVFp1g=",
-  "Source": "OneMinAPI",
-  "BasePath": "_content/OneMinAPI",
+  "Hash": "dbENI2QU4LspmYTD7Qc76BLXQqiAHQj10TK2T3LX1H0=",
+  "Source": "Client",
+  "BasePath": "_content/Client",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],

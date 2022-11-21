@@ -2,6 +2,7 @@
 using System.Reflection.PortableExecutable;
 using System.Runtime.InteropServices;
 
+namespace P1 { 
 public class Client
 {
     static void Main()
@@ -619,3 +620,4 @@ public class SqlRepository : IRepository
         return ct;
     }
 }
+    }

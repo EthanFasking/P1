@@ -8,8 +8,8 @@ using System.Runtime.InteropServices;
 using System.Data.SqlClient;
 using System.Reflection.PortableExecutable;
 using System.Net.Http.Formatting;
-using DoneMinAPI;
 
+namespace P1 { 
 
     class Program
     {
@@ -28,85 +28,279 @@ using DoneMinAPI;
                 new MediaTypeWithQualityHeaderValue("application/json"));
             try
             {  
-                  User currentUser = new User();
-                  Ticket ticket = new Ticket();
-                  List<Ticket> tickets = new List<Ticket>();
-                  List<User> users = new List<User>();
-                  currentUser = await login();
-                  getUser(currentUser);
+                Console.WriteLine("Welcome to Ticketing System");
+                bool LoggedIn = false;
+                string ConnectionString = File.ReadAllText(@"C:\Users\User\code\EthanP1\EthanP1\ConnectionString\SQLDataBaseP1.txt");
 
+                SqlRepository repo = new SqlRepository(ConnectionString);
+                User currentUser = new User();
+
+                while (!LoggedIn)
+                {
+                    //Query User to Login or Register
+                    Console.WriteLine("Please type 'login' or 'register'");
+                    string response = "" + Console.ReadLine();
+                    Console.WriteLine("Enter your Email address: ");
+                    string email = "" + Console.ReadLine();
+                    Console.WriteLine("Enter your Password: ");
+                    string password = "" + Console.ReadLine();
+
+                    if (response.ToLower().Equals("login"))
+                    {
+                        if (repo.Login(email, password))
+                        {
+                            currentUser = await login();
+                            Console.WriteLine("Logged In Successfully");
+                            LoggedIn = true;
+                        }
+                        else //else do nothing
+                        {
+                            Console.WriteLine("Login Failed");
+                        }
+                    }
+                    else if (response.ToLower().Equals("register"))
+                    {
+                        if (!repo.EmailInRepo(email))
+                        {
+                            repo.Register(email, password);
+                            Console.WriteLine("Registration Successful");
+                            Console.WriteLine("Logging In...");
+                            currentUser = new User(email, password);
+                            LoggedIn = true;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Email Unavailable");
+                        }
+                    }
+
+                }
+                while (LoggedIn)
+                {
+                    //if manager...
+                    while (currentUser.GetIsManager())
+                    {
+                        //Ask what manager action to take
+                        Console.WriteLine("1-view pending tickets");
+                        Console.WriteLine("2-approve or deny pending tickets");
+                        string response = "" + Console.ReadLine();
+                        bool isViewing = false;
+                        bool isProcessing = false;
+                        //if pendingTickets...
+                        if (response.ToLower().Equals("1"))
+                        {
+                            isViewing = true;
+                        }
+                        else if (response.ToLower().Equals("2"))
+                        {
+                            isProcessing = true;
+                        }
+                        else
+                        {
+                            Console.WriteLine("INVALID RESPONSE");
+                        }
+                        while (isViewing)
+                        {
+                            IEnumerable<string> tix = repo.GetPendingTickets();
+                            foreach (string s in tix)
+                            {
+                                Console.WriteLine(s);
+                            }
+                            Console.WriteLine("Would you like to 1-process tickets or 2-logout");
+                            string cont = "" + Console.ReadLine();
+                            if (cont.Equals("1"))
+                            {
+                                isViewing = false;
+                                isProcessing = true;
+                            }
+                            else
+                            {
+                                isViewing = false;
+                                LoggedIn = false;
+                            }
+                        }
+                        //while processing...
+                        string pro = "";
+                        while (isProcessing)
+                        {
+                            pro = "";
+                            string ad;
+                            string nextTicket = repo.ReviewTix();
+                            Console.WriteLine(nextTicket);
+                            Console.WriteLine("1-Approve or 2-Deny?");
+                            ad = "" + Console.ReadLine();
+                            if (ad.ToLower().Equals("1"))
+                            {
+                                repo.ChangeTicketStatus(1);
+                                Console.WriteLine("Ticket Approved");
+                                Console.WriteLine("1-continue, 2-view pending, 3-logout");
+                                pro = "" + Console.ReadLine();
+                                if (pro.ToLower().Equals("1"))
+                                {
+                                    isProcessing = true;
+                                    isViewing = false;
+                                }
+                                else if (pro.ToLower().Equals("2"))
+                                {
+                                    isProcessing = false;
+                                    isViewing = true;
+                                }
+                                else
+                                {
+                                    LoggedIn = false;
+                                }
+                            }
+                            else if (ad.ToLower().Equals("2"))
+                            {
+                                repo.ChangeTicketStatus(0);
+                                Console.WriteLine("Ticket Denied");
+                                Console.WriteLine("1-continue, 2-view pending, 3-logout");
+                                pro = "" + Console.ReadLine();
+                                if (pro.ToLower().Equals("1"))
+                                {
+                                    isProcessing = true;
+                                    isViewing = false;
+                                }
+                                else if (pro.ToLower().Equals("2"))
+                                {
+                                    isProcessing = false;
+                                    isViewing = true;
+                                }
+                                else
+                                {
+                                    LoggedIn = false;
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine("INVALID RESPONSE");
+                            }
+                        }
+                    }
+                    //if not manager...
+                    while (!currentUser.GetIsManager())
+                    {
+                        string pro = "";
+                        Console.WriteLine("Would you like to: ");
+                        Console.WriteLine("1-view previous tickets");
+                        Console.WriteLine("2-create a new ticket");
+                        pro = "" + Console.ReadLine();
+                        while (pro.ToLower().Equals("1"))
+                        {
+                            Console.WriteLine("Would you like to view:");
+                            Console.WriteLine("1-approved");
+                            Console.WriteLine("2-denied");
+                            string s = "" + Console.ReadLine();
+
+                            if (s.Equals("1"))
+                            {
+                                IEnumerable<string> tix = repo.GetUserTickets(currentUser, true);
+                                foreach (string t in tix)
+                                {
+                                    Console.WriteLine(t);
+                                }
+                                string g;
+                                Console.WriteLine("1-create new ticket");
+                                Console.WriteLine("2-view tickets");
+                                Console.WriteLine("3-logout");
+                                g = "" + Console.ReadLine();
+                                if (g.Equals("1"))
+                                {
+                                    pro = "2";
+                                }
+                                else if (g.Equals("2"))
+                                {
+                                    pro = "1";
+                                } else
+                                {
+                                    LoggedIn = false;
+                                }
+                            }
+                            else if (s.Equals("2"))
+                            {
+                                IEnumerable<string> tix = repo.GetUserTickets(currentUser, false);
+                                foreach (string t in tix)
+                                {
+                                    Console.WriteLine(t);
+                                }
+                                string g;
+                                Console.WriteLine("1-create new ticket");
+                                Console.WriteLine("2-view tickets");
+                                Console.WriteLine("3-logout");
+                                g = "" + Console.ReadLine();
+                                if (g.Equals("1"))
+                                {
+                                    pro = "2";
+                                }
+                                else if (g.Equals("2"))
+                                {
+                                    pro = "1";
+                                }
+                                else
+                                {
+                                    LoggedIn = false;
+                                }
+                            }
+                        }
+                        while (pro.Equals("2"))
+                        {
+                            string desc;
+                            double amt;
+                            string s = "";
+                            Console.WriteLine("Enter a description:");
+                            desc = Console.ReadLine();
+                            Console.WriteLine("Enter an amount in USD (two decimals)");
+                            amt = Double.Parse("" + Console.ReadLine());
+                            try
+                            { 
+                                repo.CreateTicket(currentUser, desc, amt);
+                                Console.WriteLine("Ticket created successfully: | " + desc + " | $" + amt.ToString() + " | PENDING |");
+                                Console.WriteLine("0-create new ticket");
+                                Console.WriteLine("1-view previous tickets");
+                                Console.WriteLine("2-logout");
+                                s = s + Console.ReadLine();
+                                if (s.Equals("0"))
+                                {
+                                    pro = "2";
+                                }
+                                else if (s.Equals("1"))
+                                {
+                                    pro = "1";
+                                } 
+                                else
+                                {
+                                    LoggedIn = false;
+                                }
+                            } 
+                            catch (Exception e)    
+                            {
+                                Console.WriteLine("Please ensure you have entered a description and an amount");
+                            }
+                        }
+                    }
+                }
             } 
             catch(Exception e)
             {
                 Console.WriteLine(e.Message);
             }
-
-
         }
-
-        static void getUser(User user)
-        {
-            Console.WriteLine($"email: {user.GetUsername()}\t " +
-                $"password: {user.GetPassword()}\t " +
-                $"isManager: {user.GetIsManager()}\t "
-                );
-        }
-        
-        static void displayTicket(Ticket ticket)
-        {
-            Console.WriteLine($"ReferenceNumber: {ticket.GetId()}\t " +
-                $"Description: '{ticket.GetDescription()}'\t " +
-                $"Amount: {ticket.GetAmount().ToString()}\t " + 
-                $"isPending: {ticket.GetIsPending().ToString()}\t +" +
-                $"isApproved: {ticket.GetIsApproved().ToString()}\t ");
-        }
-
-        static void displayTicketsList(List<Ticket> tickets)
-        {
-            foreach(Ticket ticket in tickets)
-                displayTicket(ticket);
-        }
-
-        //takes a URL and returns the employee
-        static async Task<User> GetUserAsync(string path)
-        {
-            User u = null;
-            HttpResponseMessage response = await client.GetAsync(path);
-            if (response.IsSuccessStatusCode)
-            {
-                u = await response.Content.ReadAsAsync<User>();
-            }
-            return u;
-        }
-
-        
-
-        //creates employee and returns a URL which is the location of employee
-        static async Task<Uri> RegisterUserAsync(User u)
-        {
-            HttpResponseMessage response = await client.PostAsJsonAsync(
-                "Users", u);
-            response.EnsureSuccessStatusCode();
-
-            return response.Headers.Location;
-        }
-
         static async Task<User> login()
         {
             User currentUser = new User();
-            Console.WriteLine("Please enter your email");
+            Console.WriteLine("Email: ");
             string email = Console.ReadLine();
-            Console.WriteLine("Please enter your password");
+            Console.WriteLine("Password: ");
             string password = Console.ReadLine();
 
             HttpResponseMessage response = await client.GetAsync($"/login/{email}/{password}");
             if (response.IsSuccessStatusCode)
             {
                 currentUser = await response.Content.ReadAsAsync<User>();
-            }
-            return currentUser;
         }
+        return currentUser;
     }
+}
 
 public class Ticket
 {
@@ -466,3 +660,4 @@ public class SqlRepository : IRepository
         return ct;
     }
 }
+    }
